@@ -13,23 +13,34 @@ export default async function AdminLayout({
         data: { user },
     } = await supabase.auth.getUser()
 
+    console.log('AdminLayout - User:', user?.id)
+
     if (!user) {
+        console.log('AdminLayout - No user, redirecting to login')
         redirect('/login')
     }
 
     // Check role
-    const { data: profile } = await supabase
+    const { data: profile, error } = await supabase
         .from('profiles')
-        .select('role')
+        .select('role, id')
         .eq('id', user.id)
         .single()
 
+    console.log('AdminLayout - Profile:', profile)
+    console.log('AdminLayout - Error:', error)
+
     if (profile?.role !== 'admin') {
-        // If driver tries to access admin, redirect to driver view
+        console.log('AdminLayout - Access Denied:', {
+            expected: 'admin',
+            actual: profile?.role,
+            profileId: profile?.id, // Check if we even got an ID
+            error: error
+        })
+
         if (profile?.role === 'driver') {
             redirect('/driver/tasks')
         }
-        // Otherwise... maybe login?
         redirect('/login')
     }
 

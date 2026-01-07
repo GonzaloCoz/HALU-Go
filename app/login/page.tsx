@@ -31,16 +31,22 @@ export default function LoginPage() {
             // Check user role to redirect appropriately
             const { data: { user } } = await supabase.auth.getUser()
             if (user) {
+                console.log('Login success:', user)
+
                 // Fetch profile to check role
-                const { data: profile } = await supabase
+                const { data: profile, error: profileError } = await supabase
                     .from('profiles')
                     .select('role')
                     .eq('id', user.id)
                     .single()
 
+                console.log('Profile check:', profile, profileError)
+
                 if (profile?.role === 'driver') {
+                    console.log('Redirecting to driver...')
                     router.push('/driver/tasks')
                 } else {
+                    console.log('Redirecting to admin dashboard...')
                     router.push('/admin/dashboard')
                 }
             }
