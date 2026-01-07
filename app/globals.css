@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* HALU Go Brand Colors */
+  --color-brand-dark: #0f172a;
+  /* Slate 900 */
+  --color-brand-default: #1e293b;
+  /* Slate 800 */
+  --color-brand-light: #334155;
+  /* Slate 700 */
+  --color-brand-accent: #84cc16;
+  /* Lime 500 */
+  --color-brand-accent-hover: #65a30d;
+  /* Lime 600 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Expose brand colors as utility classes */
+  --color-brand-dark: var(--color-brand-dark);
+  --color-brand-default: var(--color-brand-default);
+  --color-brand-light: var(--color-brand-light);
+  --color-brand-accent: var(--color-brand-accent);
+  --color-brand-accent-hover: var(--color-brand-accent-hover);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
